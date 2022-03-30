@@ -29,7 +29,7 @@ CREATE TABLE `asiakas` (
   `puhelinnumero` varchar(45) NOT NULL,
   PRIMARY KEY (`id_asiakas`),
   UNIQUE KEY `id_asiakas_UNIQUE` (`id_asiakas`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,6 +38,7 @@ CREATE TABLE `asiakas` (
 
 LOCK TABLES `asiakas` WRITE;
 /*!40000 ALTER TABLE `asiakas` DISABLE KEYS */;
+INSERT INTO `asiakas` VALUES (1,'Teppo Testi','Blaablaa','0451234567'),(2,'Maija Meikäläinen','Liirumlaarum','0407654321');
 /*!40000 ALTER TABLE `asiakas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -64,6 +65,7 @@ CREATE TABLE `asiakastili` (
 
 LOCK TABLES `asiakastili` WRITE;
 /*!40000 ALTER TABLE `asiakastili` DISABLE KEYS */;
+INSERT INTO `asiakastili` VALUES (1,1),(2,2);
 /*!40000 ALTER TABLE `asiakastili` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -76,7 +78,7 @@ DROP TABLE IF EXISTS `kortti`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `kortti` (
   `id_kortti` int unsigned NOT NULL AUTO_INCREMENT,
-  `korttinumero` int unsigned DEFAULT NULL,
+  `korttinumero` varchar(255) DEFAULT NULL,
   `pin` varchar(255) DEFAULT NULL,
   `id_tili` int unsigned NOT NULL,
   `id_asiakas` int unsigned NOT NULL,
@@ -87,7 +89,7 @@ CREATE TABLE `kortti` (
   KEY `fk_kortti_asiakas1_idx` (`id_asiakas`),
   CONSTRAINT `id_asiakas_kortti` FOREIGN KEY (`id_asiakas`) REFERENCES `asiakas` (`id_asiakas`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `id_tili_kortti` FOREIGN KEY (`id_tili`) REFERENCES `tili` (`id_tili`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,6 +98,7 @@ CREATE TABLE `kortti` (
 
 LOCK TABLES `kortti` WRITE;
 /*!40000 ALTER TABLE `kortti` DISABLE KEYS */;
+INSERT INTO `kortti` VALUES (1,'05009B22B2','1234',1,1),(2,'06000620AD','0000',2,2);
 /*!40000 ALTER TABLE `kortti` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -113,7 +116,7 @@ CREATE TABLE `tili` (
   PRIMARY KEY (`id_tili`),
   UNIQUE KEY `id_tili_UNIQUE` (`id_tili`),
   UNIQUE KEY `tilinumero_UNIQUE` (`tilinumero`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -122,6 +125,7 @@ CREATE TABLE `tili` (
 
 LOCK TABLES `tili` WRITE;
 /*!40000 ALTER TABLE `tili` DISABLE KEYS */;
+INSERT INTO `tili` VALUES (1,'FI4950009420028730',1000),(2,'FI4966010001234568',1000);
 /*!40000 ALTER TABLE `tili` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -164,4 +168,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-29 13:05:16
+-- Dump completed on 2022-03-30 13:02:17
