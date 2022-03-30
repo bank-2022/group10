@@ -146,6 +146,8 @@ CREATE TABLE `tilitapahtumat` (
   PRIMARY KEY (`id_tilitapahtumat`),
   UNIQUE KEY `id_tilitapahtumat_UNIQUE` (`id_tilitapahtumat`),
   KEY `fk_tilitapahtumat_tili1_idx` (`id_tili`),
+  KEY `id_kortti_tilitapahtumat_idx` (`id_kortti`),
+  CONSTRAINT `id_kortti_tilitapahtumat` FOREIGN KEY (`id_kortti`) REFERENCES `kortti` (`id_kortti`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `id_tili_tilitapahtumat` FOREIGN KEY (`id_tili`) REFERENCES `tili` (`id_tili`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -168,4 +170,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-30 13:02:17
+-- Dump completed on 2022-03-30 13:42:20
