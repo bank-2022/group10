@@ -1,4 +1,4 @@
 # group10
 
-##ER-kaavio:
+## ER-kaavio:
 <img src=documents/Bankomat%20ER-diagrammi.png>
