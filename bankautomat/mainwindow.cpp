@@ -6,10 +6,20 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    objectLogin = new Login;
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete objectLogin;
+    ui=nullptr;
+    objectLogin=nullptr;
+}
+
+
+void MainWindow::on_btnLogin_clicked()
+{
+objectLogin->show();
 }
 
