@@ -29,7 +29,7 @@ CREATE TABLE `asiakas` (
   `puhelinnumero` varchar(45) NOT NULL,
   PRIMARY KEY (`id_asiakas`),
   UNIQUE KEY `id_asiakas_UNIQUE` (`id_asiakas`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -54,8 +54,8 @@ CREATE TABLE `asiakastili` (
   `id_tili` int unsigned NOT NULL,
   PRIMARY KEY (`id_tili`,`id_asiakas`),
   KEY `id_asiakas_idx` (`id_asiakas`),
-  CONSTRAINT `id_asiakas_asiakastili` FOREIGN KEY (`id_asiakas`) REFERENCES `asiakas` (`id_asiakas`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `id_tili_asiakastili` FOREIGN KEY (`id_tili`) REFERENCES `tili` (`id_tili`) ON DELETE RESTRICT ON UPDATE CASCADE
+  CONSTRAINT `id_asiakas_asiakastili` FOREIGN KEY (`id_asiakas`) REFERENCES `asiakas` (`id_asiakas`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `id_tili_asiakastili` FOREIGN KEY (`id_tili`) REFERENCES `tili` (`id_tili`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -87,9 +87,9 @@ CREATE TABLE `kortti` (
   UNIQUE KEY `korttinro_UNIQUE` (`korttinumero`),
   KEY `fk_kortti_tili1_idx` (`id_tili`),
   KEY `fk_kortti_asiakas1_idx` (`id_asiakas`),
-  CONSTRAINT `id_asiakas_kortti` FOREIGN KEY (`id_asiakas`) REFERENCES `asiakas` (`id_asiakas`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `id_tili_kortti` FOREIGN KEY (`id_tili`) REFERENCES `tili` (`id_tili`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  CONSTRAINT `id_asiakas_kortti` FOREIGN KEY (`id_asiakas`) REFERENCES `asiakas` (`id_asiakas`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `id_tili_kortti` FOREIGN KEY (`id_tili`) REFERENCES `tili` (`id_tili`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,7 +98,7 @@ CREATE TABLE `kortti` (
 
 LOCK TABLES `kortti` WRITE;
 /*!40000 ALTER TABLE `kortti` DISABLE KEYS */;
-INSERT INTO `kortti` VALUES (1,'05009B22B2','1234',1,1),(2,'06000620AD','0000',2,2);
+INSERT INTO `kortti` VALUES (1,'05009B22B2','$2a$10$Y61m2.ZoIJgDq9rHX3we/uX3ca7ZdqHD1tT2kT/uBYvLfCZQGIb7e',1,1),(2,'06000620AD','$2a$10$hdPTewBxl4dbJMf8HN2pfupJ/X9Cfuuc/bWL4w5UVUqZBWjE8I.Km',2,2);
 /*!40000 ALTER TABLE `kortti` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -116,7 +116,7 @@ CREATE TABLE `tili` (
   PRIMARY KEY (`id_tili`),
   UNIQUE KEY `id_tili_UNIQUE` (`id_tili`),
   UNIQUE KEY `tilinumero_UNIQUE` (`tilinumero`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -147,9 +147,9 @@ CREATE TABLE `tilitapahtumat` (
   UNIQUE KEY `id_tilitapahtumat_UNIQUE` (`id_tilitapahtumat`),
   KEY `fk_tilitapahtumat_tili1_idx` (`id_tili`),
   KEY `id_kortti_tilitapahtumat_idx` (`id_kortti`),
-  CONSTRAINT `id_kortti_tilitapahtumat` FOREIGN KEY (`id_kortti`) REFERENCES `kortti` (`id_kortti`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `id_tili_tilitapahtumat` FOREIGN KEY (`id_tili`) REFERENCES `tili` (`id_tili`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `id_kortti_tilitapahtumat` FOREIGN KEY (`id_kortti`) REFERENCES `kortti` (`id_kortti`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `id_tili_tilitapahtumat` FOREIGN KEY (`id_tili`) REFERENCES `tili` (`id_tili`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -158,6 +158,7 @@ CREATE TABLE `tilitapahtumat` (
 
 LOCK TABLES `tilitapahtumat` WRITE;
 /*!40000 ALTER TABLE `tilitapahtumat` DISABLE KEYS */;
+INSERT INTO `tilitapahtumat` VALUES (1,'2022-03-31 18:00:00','otto',50,1,1);
 /*!40000 ALTER TABLE `tilitapahtumat` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -170,4 +171,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-30 13:42:20
+-- Dump completed on 2022-04-12 12:27:01
