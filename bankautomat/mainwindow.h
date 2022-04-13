@@ -2,6 +2,10 @@
 #define MAINWINDOW_H
 
 #include "login.h"
+#include "pin.h"
+
+#include <QMainWindow>
+#include <QSerialPort>
 
 #include <QMainWindow>
 
@@ -19,9 +23,14 @@ public:
 
 private slots:
     void on_btnLogin_clicked();
+    void serialReadyRead();
+
 
 private:
     Ui::MainWindow *ui;
     Login *objectLogin;
+    QSerialPort *mSerial;
+    QString rfid;
+    Pin *objectPin;
 };
 #endif // MAINWINDOW_H

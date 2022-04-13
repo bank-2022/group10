@@ -1,8 +1,12 @@
-#ifndef BANKMAIN_H
-#define BANKMAIN_H
+#ifndef BankMain_H
+#define BankMain_H
+
+#include "myurl.h"
 
 #include <QDialog>
-#include <QDebug>
+#include <QtNetwork>
+#include <QNetworkAccessManager>
+#include <QJsonDocument>
 
 namespace Ui {
 class BankMain;
@@ -13,11 +17,22 @@ class BankMain : public QDialog
     Q_OBJECT
 
 public:
-    explicit BankMain(QWidget *parent = nullptr);
+    explicit BankMain(QString rfid, QByteArray token, QWidget *parent = nullptr);
     ~BankMain();
+
+private slots:
+
+    void accountSlot(QNetworkReply *reply);
 
 private:
     Ui::BankMain *ui;
+    MyUrl *objectMyUrl;
+
+    QNetworkAccessManager *accountManager;
+    QNetworkReply *reply;
+    QByteArray response_data;
+    QString korttinumero;
+    QByteArray webtoken;
 };
 
-#endif // BANKMAIN_H
+#endif // BankMain_H

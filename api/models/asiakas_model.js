@@ -23,6 +23,10 @@ const asiakas = {
       [asiakas.nimi, asiakas.osoite, asiakas.puhelinnumero, id],
       callback
     );
+  },
+  getAccount:function(korttinumero, callback){
+    return db.query('select nimi, saldo from asiakas inner join asiakastili on asiakas.id_asiakas=asiakastili.id_asiakas inner join tili on tili.id_tili=asiakastili.id_tili  inner join kortti on asiakas.id_asiakas=kortti.id_asiakas where kortti.korttinumero=?',
+    [korttinumero], callback);
   }
 };
 module.exports = asiakas;
