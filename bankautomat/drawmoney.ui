@@ -18,55 +18,55 @@
     <rect>
      <x>60</x>
      <y>50</y>
-     <width>254</width>
-     <height>80</height>
+     <width>256</width>
+     <height>91</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
     <item row="1" column="0">
-     <widget class="QPushButton" name="pushButton_2">
+     <widget class="QPushButton" name="btnDraw40">
       <property name="text">
        <string>40</string>
       </property>
      </widget>
     </item>
     <item row="0" column="0">
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="btnDraw20">
       <property name="text">
        <string>20</string>
       </property>
      </widget>
     </item>
     <item row="2" column="1">
-     <widget class="QPushButton" name="pushButton_7">
+     <widget class="QPushButton" name="btnDrawClose">
       <property name="text">
        <string>Sulje</string>
       </property>
      </widget>
     </item>
     <item row="2" column="0">
-     <widget class="QPushButton" name="pushButton_3">
+     <widget class="QPushButton" name="btnDraw60">
       <property name="text">
        <string>60</string>
       </property>
      </widget>
     </item>
     <item row="2" column="2">
-     <widget class="QPushButton" name="pushButton_6">
+     <widget class="QPushButton" name="btnDraw500">
       <property name="text">
        <string>500</string>
       </property>
      </widget>
     </item>
     <item row="1" column="2">
-     <widget class="QPushButton" name="pushButton_5">
+     <widget class="QPushButton" name="btnDraw200">
       <property name="text">
        <string>200</string>
       </property>
      </widget>
     </item>
     <item row="0" column="2">
-     <widget class="QPushButton" name="pushButton_4">
+     <widget class="QPushButton" name="btnDraw100">
       <property name="text">
        <string>100</string>
       </property>
