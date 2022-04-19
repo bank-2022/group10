@@ -9,7 +9,7 @@
 #include <QtNetwork>
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
- #include <QToolButton>
+ #include <QTimer>
 
 namespace Ui {
 class Pin;
@@ -43,6 +43,7 @@ private:
     QByteArray response_data;
     QByteArray webtoken;
     BankMain *objectBankMain;
+    int loginAttempts = 3;
 
 };
 
