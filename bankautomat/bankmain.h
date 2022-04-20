@@ -2,6 +2,8 @@
 #define BankMain_H
 
 #include "myurl.h"
+#include "bankactions.h"
+#include "drawmoney.h"
 
 #include <QDialog>
 #include <QtNetwork>
@@ -24,9 +26,16 @@ private slots:
 
     void accountSlot(QNetworkReply *reply);
 
+    void on_buttonDrawMoney_clicked();
+    void on_buttonActions_clicked();
+    void on_buttonLogOut_clicked();
+    void on_listViewActions_indexesMoved(const QModelIndexList &indexes);
+
 private:
     Ui::BankMain *ui;
-    MyUrl *objectMyUrl;
+    MyUrl *objectMyUrl;    
+    BankActions *objectBankActions;
+    DrawMoney *objectDrawMoney;
 
     QNetworkAccessManager *accountManager;
     QNetworkReply *reply;
