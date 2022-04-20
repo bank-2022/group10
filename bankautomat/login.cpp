@@ -21,7 +21,8 @@ void Login::on_btnLoginLogin_clicked()
 {
     rfid=ui->lineEditRFID->text();
     objectPin = new Pin(rfid);
-   objectPin->show();
+    objectPin->show();
+    this->close();
 
 }
 
