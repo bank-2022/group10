@@ -1,6 +1,7 @@
 #include "bankmain.h"
 #include "ui_bankmain.h"
 
+
 BankMain::BankMain(QString rfid, QByteArray token, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::BankMain)
@@ -55,3 +56,31 @@ void BankMain::accountSlot(QNetworkReply *reply)
     ui->labelSum->setText(saldo);
     ui->labelSum->adjustSize();
 }
+
+void BankMain::on_buttonDrawMoney_clicked()
+{
+    objectDrawMoney = new DrawMoney;
+    objectDrawMoney->show();
+}
+
+
+void BankMain::on_buttonActions_clicked()
+{
+    objectBankActions = new BankActions;
+    objectBankActions->show();
+}
+
+
+void BankMain::on_buttonLogOut_clicked()
+{
+    this->close();
+}
+
+
+
+
+void BankMain::on_listViewActions_indexesMoved(const QModelIndexList &indexes)
+{
+
+}
+

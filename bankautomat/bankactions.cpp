@@ -12,3 +12,28 @@ BankActions::~BankActions()
 {
     delete ui;
 }
+
+void BankActions::on_btnActionsNext_clicked()
+{
+
+}
+
+
+void BankActions::on_btnActionsPrevious_clicked()
+{
+
+}
+
+
+void BankActions::on_btnActionsClose_clicked()
+{
+ this->close();
+}
+
+
+void BankActions::on_listView_indexesMoved(const QModelIndexList &indexes)
+{
+
+
+}
+
