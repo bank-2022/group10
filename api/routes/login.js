@@ -5,6 +5,7 @@ const login = require('../models/login_model');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const kortti = require('../models/kortti_model');
+const cardLocked = "cardLocked";
 
 
 
@@ -57,7 +58,7 @@ router.post('/',
             }
             else{
               console.log("card is locked");
-              response.send(false);
+              response.send(cardLocked);
             }
         }else{
           console.log("card does not exists");

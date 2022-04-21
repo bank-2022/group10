@@ -78,15 +78,22 @@ void Pin::pinSlot(QNetworkReply *reply)
 {
     response_data=reply->readAll();
     qDebug() <<response_data;
-    if (response_data!="false") {
+
+    if (response_data =="cardLocked")
+    {
+         qDebug() <<"ERROR: card locked!";
+         ui->labelStatus->setText("Korttisi on lukittu. Ota yhteyttä pankkiin.");
+         ui->frame->setEnabled(false);
+         QTimer::singleShot(3000,this,SLOT(close()));
+    }
+    else if (response_data!="false") {
         webtoken="Bearer "+response_data;
 
         objectBankMain = new BankMain(rfid, webtoken);
 
         objectBankMain->show();
-        this->close();
     }
-    else {
+    else  {
         ui->lineEditPin->clear();
         qDebug() <<"ERROR";
         loginAttempts--;
