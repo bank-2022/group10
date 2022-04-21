@@ -66,7 +66,7 @@ void BankMain::on_buttonDrawMoney_clicked()
 
 void BankMain::on_buttonActions_clicked()
 {
-    objectBankActions = new BankActions;
+    objectBankActions = new BankActions(webtoken);
     objectBankActions->show();
 }
 

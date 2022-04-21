@@ -1,11 +1,27 @@
 #include "bankactions.h"
 #include "ui_bankactions.h"
 
-BankActions::BankActions(QWidget *parent) :
+BankActions::BankActions(QByteArray token,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::BankActions)
 {
     ui->setupUi(this);
+    objectMyUrl=new MyUrl;
+    webtoken=token;
+
+    QString site_url=objectMyUrl->getBaseUrl()+"/tilitapahtumat";
+    QNetworkRequest request((site_url));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    //WEBTOKEN ALKU
+    request.setRawHeader(QByteArray("Authorization"),(webtoken));
+    //WEBTOKEN LOPPU
+
+    actionsManager = new QNetworkAccessManager(this);
+    connect(actionsManager, SIGNAL(finished(QNetworkReply*)),this, SLOT(actionsSlot(QNetworkReply*)));
+    reply = actionsManager->get(request);
+
+
 }
 
 BankActions::~BankActions()
@@ -27,13 +43,24 @@ void BankActions::on_btnActionsPrevious_clicked()
 
 void BankActions::on_btnActionsClose_clicked()
 {
+
  this->close();
 }
 
-
-void BankActions::on_listView_indexesMoved(const QModelIndexList &indexes)
+void BankActions::actionsSlot(QNetworkReply *reply)
 {
+    response_data = reply->readAll();
+    qDebug() << response_data;
 
-
+    QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
+    QJsonArray json_array = json_doc.array();
+    QString tapahtumat;
+    foreach (const QJsonValue &value, json_array){
+        QJsonObject json_obj = value.toObject();
+        tapahtumat+=json_obj["paivays"].toString()+" "+json_obj["tapahtuma"].toString()+" "+QString::number(json_obj["summa"].toInt())+"\r";
 }
+    qDebug()<< tapahtumat;
+    ui->BankActionScreen->setText(tapahtumat);
+}
+
 

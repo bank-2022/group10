@@ -23,6 +23,12 @@ const tilitapahtumat = {
       [tilitapahtumat.paivays, tilitapahtumat.tapahtuma, tilitapahtumat.summa, tilitapahtumat.id_kortti, tilitapahtumat.id_tili,id],
       callback
     );
+  },
+  getTilitapahtumat: function(id,tilitapahtumat, callback) {
+    return db.query(
+    'select paivays, tapahtuma,summa from tilitapahtumat where id_tilitapahtumat=?',
+       [tilitapahtumat.paivays, tilitapahtumat.tapahtuma, tilitapahtumat.summa,id],callback);
+
   }
 };
 module.exports = tilitapahtumat;
