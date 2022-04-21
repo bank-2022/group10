@@ -1,6 +1,6 @@
--- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: bank
+-- Host: localhost    Database: bank
 -- ------------------------------------------------------
 -- Server version	8.0.23
 
@@ -82,6 +82,7 @@ CREATE TABLE `kortti` (
   `pin` varchar(255) DEFAULT NULL,
   `id_tili` int unsigned NOT NULL,
   `id_asiakas` int unsigned NOT NULL,
+  `locked` varchar(225) NOT NULL,
   PRIMARY KEY (`id_kortti`),
   UNIQUE KEY `id_kortti_UNIQUE` (`id_kortti`),
   UNIQUE KEY `korttinro_UNIQUE` (`korttinumero`),
@@ -98,7 +99,7 @@ CREATE TABLE `kortti` (
 
 LOCK TABLES `kortti` WRITE;
 /*!40000 ALTER TABLE `kortti` DISABLE KEYS */;
-INSERT INTO `kortti` VALUES (1,'05009B22B2','$2a$10$Y61m2.ZoIJgDq9rHX3we/uX3ca7ZdqHD1tT2kT/uBYvLfCZQGIb7e',1,1),(2,'06000620AD','$2a$10$hdPTewBxl4dbJMf8HN2pfupJ/X9Cfuuc/bWL4w5UVUqZBWjE8I.Km',2,2);
+INSERT INTO `kortti` VALUES (1,'05009B22B2','$2a$10$Y61m2.ZoIJgDq9rHX3we/uX3ca7ZdqHD1tT2kT/uBYvLfCZQGIb7e',1,1,'FALSE'),(2,'06000620AD','$2a$10$hdPTewBxl4dbJMf8HN2pfupJ/X9Cfuuc/bWL4w5UVUqZBWjE8I.Km',2,2,'TRUE');
 /*!40000 ALTER TABLE `kortti` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -171,4 +172,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-12 12:27:01
+-- Dump completed on 2022-04-21 13:51:12
