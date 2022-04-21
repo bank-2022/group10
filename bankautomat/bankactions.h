@@ -19,19 +19,25 @@ class BankActions : public QDialog
     Q_OBJECT
 
 public:
-    explicit BankActions(QWidget *parent = nullptr);
+    explicit BankActions(QByteArray token,QWidget *parent = nullptr);
     ~BankActions();
 
 private slots:
     void on_btnActionsNext_clicked();
     void on_btnActionsPrevious_clicked();
     void on_btnActionsClose_clicked();
-    void on_listView_indexesMoved(const QModelIndexList &indexes);
+
+    void actionsSlot(QNetworkReply *reply);
 
 private:
     Ui::BankActions *ui;
     MyUrl *objectMyUrl;
-
+    QString base_url;
+    QNetworkAccessManager *actionsManager;
+    QNetworkReply *reply;
+    QByteArray response_data;
+    QString korttinumero;
+    QByteArray webtoken;
 };
 
 #endif // BANKACTIONS_H
