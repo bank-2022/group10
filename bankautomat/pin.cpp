@@ -92,6 +92,7 @@ void Pin::pinSlot(QNetworkReply *reply)
         objectBankMain = new BankMain(rfid, webtoken);
 
         objectBankMain->show();
+        this->close();
     }
     else  {
         ui->lineEditPin->clear();
