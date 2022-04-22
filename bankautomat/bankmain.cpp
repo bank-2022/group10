@@ -41,14 +41,22 @@ void BankMain::accountSlot(QNetworkReply *reply)
         nimi+=json_obj["nimi"].toString()+"\r";
     }
 
-    QString saldo;
     foreach (const QJsonValue &value, json_array) {
         QJsonObject json_obj = value.toObject();
         saldo+=QString::number(json_obj["saldo"].toInt())+"\r";
     }
+    foreach (const QJsonValue &value, json_array) {
+        QJsonObject json_obj = value.toObject();
+        id_kortti+=QString::number(json_obj["id_kortti"].toInt());
+    }
+
+    foreach (const QJsonValue &value, json_array) {
+        QJsonObject json_obj = value.toObject();
+        id_tili+=QString::number(json_obj["id_tili"].toInt());
+    }
 
 
-    qDebug()<<nimi;
+    qDebug()<<nimi<<id_kortti<<id_tili;
 
     ui->labelName->setText(nimi);
     ui->labelName->adjustSize();
@@ -59,7 +67,7 @@ void BankMain::accountSlot(QNetworkReply *reply)
 
 void BankMain::on_buttonDrawMoney_clicked()
 {
-    objectDrawMoney = new DrawMoney;
+    objectDrawMoney = new DrawMoney(id_kortti, id_tili, webtoken);
     objectDrawMoney->show();
 }
 

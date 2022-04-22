@@ -59,4 +59,15 @@ function(request, response) {
   });
 });
 
+router.post('/debit',
+function(request,response) {
+  tilitapahtumat.debit(request.body, function(err, dbResult) {
+    if (err) {
+      response.json(err);
+    } else {
+      response.json(dbResult.affectedRows);
+    }
+  });
+});
+
 module.exports = router;
