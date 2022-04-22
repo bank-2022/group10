@@ -2,7 +2,7 @@ const db = require('../database');
 
 const tilitapahtumat = {
   getById: function(id, callback) {
-    return db.query('select * from tilitapahtumat where id_tilitapahtumat=?', [id], callback);
+    return db.query('select * from tilitapahtumat where id_tili=?', [id], callback);
   },
   getAll: function(callback) {
     return db.query('select * from tilitapahtumat', callback);
@@ -27,6 +27,6 @@ const tilitapahtumat = {
   debit: function(data, callback) {
     return db.query('call debit_transfer(?,?,?)',[data.id_kortti, data.id_tili, data.summa], callback);
 
-  }
+  },
 };
 module.exports = tilitapahtumat;
