@@ -8,19 +8,30 @@ BankMain::BankMain(QString rfid, QByteArray token, QWidget *parent) :
 {
     ui->setupUi(this);
     korttinumero=rfid;
+    tili_id = id_tili;
     objectMyUrl=new MyUrl;
+    objectMyUrl2=new MyUrl;
     webtoken=token;
     QString site_url=objectMyUrl->getBaseUrl()+"/asiakas/tili/"+korttinumero;
     QNetworkRequest request((site_url));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
+    QString site_url2=objectMyUrl2->getBaseUrl()+"/tilitapahtumat/"+tili_id;
+    QNetworkRequest request2((site_url2));
+    request2.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+
     //WEBTOKEN ALKU
     request.setRawHeader(QByteArray("Authorization"),(webtoken));
+    request2.setRawHeader(QByteArray("Authorization"),(webtoken));
     //WEBTOKEN LOPPU
 
     accountManager = new QNetworkAccessManager(this);
     connect(accountManager, SIGNAL(finished(QNetworkReply*)),this, SLOT(accountSlot(QNetworkReply*)));
     reply = accountManager->get(request);
+    actionsManager = new QNetworkAccessManager(this);
+    connect(actionsManager, SIGNAL(finished(QNetworkReply*)),this, SLOT(actionsSlot(QNetworkReply*)));
+    reply = actionsManager->get(request2);
 }
 
 BankMain::~BankMain()
@@ -65,6 +76,22 @@ void BankMain::accountSlot(QNetworkReply *reply)
     ui->labelSum->adjustSize();
 }
 
+void BankMain::actionsSlot(QNetworkReply *reply)
+{
+    response_data = reply->readAll();
+    qDebug() << response_data;
+
+    QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
+    QJsonArray json_array = json_doc.array();
+    QString tapahtumat;
+    foreach (const QJsonValue &value, json_array){
+        QJsonObject json_obj = value.toObject();
+        tapahtumat+=json_obj["paivays"].toString()+" "+json_obj["tapahtuma"].toString()+" "+QString::number(json_obj["summa"].toInt())+"\r";
+}
+    qDebug()<< tapahtumat;
+    ui->MainActions->setText(tapahtumat);
+}
+
 void BankMain::on_buttonDrawMoney_clicked()
 {
     objectDrawMoney = new DrawMoney(id_kortti, id_tili, webtoken);
@@ -86,9 +113,4 @@ void BankMain::on_buttonLogOut_clicked()
 
 
 
-
-void BankMain::on_listViewActions_indexesMoved(const QModelIndexList &indexes)
-{
-
-}
 
