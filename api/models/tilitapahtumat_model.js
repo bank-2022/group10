@@ -7,6 +7,10 @@ const tilitapahtumat = {
   getAll: function(callback) {
     return db.query('select * from tilitapahtumat', callback);
   },
+  get10: function(ttSivu, callback) {
+    ttSivu = (ttSivu - 1) * 10;
+    return db.query('select * from tilitapahtumat LIMIT ?, 10',[ttSivu], callback);
+  },
   add: function(tilitapahtumat, callback) {
     return db.query(
       'insert into tilitapahtumat (paivays,tapahtuma,summa,id_kortti,id_tili) values(?,?,?,?,?)',
