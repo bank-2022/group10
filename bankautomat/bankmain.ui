@@ -13,16 +13,6 @@
   <property name="windowTitle">
    <string>BankMain</string>
   </property>
-  <widget class="QListView" name="listViewActions">
-   <property name="geometry">
-    <rect>
-     <x>230</x>
-     <y>40</y>
-     <width>256</width>
-     <height>261</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QPushButton" name="buttonActions">
    <property name="geometry">
     <rect>
@@ -112,6 +102,16 @@
    </property>
    <property name="text">
     <string>Nosta rahaa</string>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="MainActions">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>60</y>
+     <width>311</width>
+     <height>271</height>
+    </rect>
    </property>
   </widget>
  </widget>

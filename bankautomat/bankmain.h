@@ -25,21 +25,25 @@ public:
 private slots:
 
     void accountSlot(QNetworkReply *reply);
+    void actionsSlot(QNetworkReply *reply);
     void on_buttonDrawMoney_clicked();
     void on_buttonActions_clicked();
     void on_buttonLogOut_clicked();
-    void on_listViewActions_indexesMoved(const QModelIndexList &indexes);
+
 
 private:
     Ui::BankMain *ui;
-    MyUrl *objectMyUrl;    
+    MyUrl *objectMyUrl;
+    MyUrl *objectMyUrl2;
     BankActions *objectBankActions;
     DrawMoney *objectDrawMoney;
 
     QNetworkAccessManager *accountManager;
+    QNetworkAccessManager *actionsManager;
     QNetworkReply *reply;
     QByteArray response_data;
     QString korttinumero;
+    QString tili_id;
     QString id_tili;
     QString id_kortti;
     QString saldo;
