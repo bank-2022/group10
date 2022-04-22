@@ -10,6 +10,7 @@ BankActions::BankActions(QString id_tili,QByteArray token,QWidget *parent) :
     webtoken=token;
     tili_id=id_tili;
 
+
     QString site_url=objectMyUrl->getBaseUrl()+"/tilitapahtumat/"+tili_id;
     QNetworkRequest request((site_url));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
