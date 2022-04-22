@@ -25,7 +25,6 @@ public:
 private slots:
 
     void accountSlot(QNetworkReply *reply);
-
     void on_buttonDrawMoney_clicked();
     void on_buttonActions_clicked();
     void on_buttonLogOut_clicked();
@@ -41,6 +40,9 @@ private:
     QNetworkReply *reply;
     QByteArray response_data;
     QString korttinumero;
+    QString id_tili;
+    QString id_kortti;
+    QString saldo;
     QByteArray webtoken;
 };
 

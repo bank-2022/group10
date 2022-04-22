@@ -1,6 +1,9 @@
 #ifndef DRAWMONEY_H
 #define DRAWMONEY_H
 
+#include "myurl.h"
+#include "drawanothersum.h"
+
 #include <QDialog>
 #include <QtNetwork>
 #include <QNetworkAccessManager>
@@ -15,20 +18,27 @@ class DrawMoney : public QDialog
     Q_OBJECT
 
 public:
-    explicit DrawMoney(QWidget *parent = nullptr);
+    explicit DrawMoney(QString id_kortti, QString id_tili, QByteArray token, QWidget *parent = nullptr);
     ~DrawMoney();
 
 private slots:
-    void on_btnDraw20_clicked();
-    void on_btnDraw40_clicked();
-    void on_btnDraw60_clicked();
-    void on_btnDraw100_clicked();
-    void on_btnDraw200_clicked();
-    void on_btnDraw500_clicked();
+    void debitSlot(QNetworkReply *reply);
+    void buttonClicked();
     void on_btnDrawClose_clicked();
+    void on_btnDrawX_clicked();
 
 private:
     Ui::DrawMoney *ui;
+    QString kortti_id;
+    QString tili_id;
+    MyUrl *objectMyUrl;
+    QString base_url;
+    QNetworkAccessManager *debitManager;
+    QNetworkReply *reply;
+    QByteArray response_data;
+    QByteArray webtoken;
+    QVector <QPushButton *> buttons;
+    int sum;
 };
 
 #endif // DRAWMONEY_H

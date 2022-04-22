@@ -23,6 +23,10 @@ const tilitapahtumat = {
       [tilitapahtumat.paivays, tilitapahtumat.tapahtuma, tilitapahtumat.summa, tilitapahtumat.id_kortti, tilitapahtumat.id_tili,id],
       callback
     );
+  },
+  debit: function(data, callback) {
+    return db.query('call debit_transfer(?,?,?)',[data.id_kortti, data.id_tili, data.summa], callback);
+
   }
 };
 module.exports = tilitapahtumat;

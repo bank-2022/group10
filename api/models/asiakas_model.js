@@ -25,7 +25,7 @@ const asiakas = {
     );
   },
   getAccount:function(korttinumero, callback){
-    return db.query('select nimi, saldo from asiakas inner join asiakastili on asiakas.id_asiakas=asiakastili.id_asiakas inner join tili on tili.id_tili=asiakastili.id_tili  inner join kortti on asiakas.id_asiakas=kortti.id_asiakas where kortti.korttinumero=?',
+    return db.query('select nimi, saldo, kortti.id_kortti, kortti.id_tili from asiakas inner join asiakastili on asiakas.id_asiakas=asiakastili.id_asiakas inner join tili on tili.id_tili=asiakastili.id_tili  inner join kortti on asiakas.id_asiakas=kortti.id_asiakas where kortti.korttinumero=?',
     [korttinumero], callback);
   }
 };

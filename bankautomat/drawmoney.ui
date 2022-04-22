@@ -16,17 +16,17 @@
   <widget class="QWidget" name="gridLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>60</x>
-     <y>50</y>
+     <x>70</x>
+     <y>130</y>
      <width>256</width>
-     <height>91</height>
+     <height>108</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="0">
-     <widget class="QPushButton" name="btnDraw40">
+    <item row="2" column="2">
+     <widget class="QPushButton" name="btnDraw500">
       <property name="text">
-       <string>40</string>
+       <string>500</string>
       </property>
      </widget>
     </item>
@@ -37,10 +37,10 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="1">
-     <widget class="QPushButton" name="btnDrawClose">
+    <item row="1" column="0">
+     <widget class="QPushButton" name="btnDraw40">
       <property name="text">
-       <string>Sulje</string>
+       <string>40</string>
       </property>
      </widget>
     </item>
@@ -51,10 +51,10 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="2">
-     <widget class="QPushButton" name="btnDraw500">
+    <item row="0" column="2">
+     <widget class="QPushButton" name="btnDraw100">
       <property name="text">
-       <string>500</string>
+       <string>100</string>
       </property>
      </widget>
     </item>
@@ -65,14 +65,54 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="2">
-     <widget class="QPushButton" name="btnDraw100">
+    <item row="3" column="0">
+     <widget class="QPushButton" name="btnDrawClose">
       <property name="text">
-       <string>100</string>
+       <string>Sulje</string>
       </property>
      </widget>
     </item>
+    <item row="3" column="2">
+     <widget class="QPushButton" name="btnDrawX">
+      <property name="text">
+       <string>Syötä summa</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
    </layout>
+  </widget>
+  <widget class="QLabel" name="labelStatus">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>70</y>
+     <width>251</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
   </widget>
  </widget>
  <resources/>
