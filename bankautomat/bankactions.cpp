@@ -1,15 +1,16 @@
 #include "bankactions.h"
 #include "ui_bankactions.h"
 
-BankActions::BankActions(QByteArray token,QWidget *parent) :
+BankActions::BankActions(QString id_tili,QByteArray token,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::BankActions)
 {
     ui->setupUi(this);
     objectMyUrl=new MyUrl;
     webtoken=token;
+    tili_id = id_tili;
 
-    QString site_url=objectMyUrl->getBaseUrl()+"/tilitapahtumat";
+    QString site_url=objectMyUrl->getBaseUrl()+"/tilitapahtumat/"+tili_id;
     QNetworkRequest request((site_url));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
