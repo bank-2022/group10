@@ -74,7 +74,7 @@ void BankMain::on_buttonDrawMoney_clicked()
 
 void BankMain::on_buttonActions_clicked()
 {
-    objectBankActions = new BankActions(webtoken);
+    objectBankActions = new BankActions(id_tili,webtoken);
     objectBankActions->show();
 }
 
@@ -84,11 +84,4 @@ void BankMain::on_buttonLogOut_clicked()
     this->close();
 }
 
-
-
-
-void BankMain::on_listViewActions_indexesMoved(const QModelIndexList &indexes)
-{
-
-}
 

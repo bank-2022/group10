@@ -19,7 +19,7 @@ class BankActions : public QDialog
     Q_OBJECT
 
 public:
-    explicit BankActions(QByteArray token,QWidget *parent = nullptr);
+    explicit BankActions(QString id_tili,QByteArray token,QWidget *parent = nullptr);
     ~BankActions();
 
 private slots:
@@ -38,6 +38,7 @@ private:
     QByteArray response_data;
     QString korttinumero;
     QByteArray webtoken;
+    QString tili_id;
 };
 
 #endif // BANKACTIONS_H
