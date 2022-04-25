@@ -10,7 +10,7 @@ BankActions::BankActions(QString id_tili,QByteArray token,QWidget *parent) :
     webtoken=token;
     tili_id = id_tili;
 
-    QString site_url=objectMyUrl->getBaseUrl()+"/tilitapahtumat/"+tili_id;
+    QString site_url=objectMyUrl->getBaseUrl()+"/tilitapahtumat/get/"+tili_id+"/"+QString::number(ttSivu)+"/10";
     QNetworkRequest request((site_url));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
@@ -32,13 +32,40 @@ BankActions::~BankActions()
 
 void BankActions::on_btnActionsNext_clicked()
 {
+ ttSivu = ttSivu + 1;
+ qDebug() << ttSivu;
+ QString site_url=objectMyUrl->getBaseUrl()+"/tilitapahtumat/get/"+tili_id+"/"+QString::number(ttSivu)+"/10";
+ QNetworkRequest request((site_url));
+ request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
+ //WEBTOKEN ALKU
+ request.setRawHeader(QByteArray("Authorization"),(webtoken));
+ //WEBTOKEN LOPPU
+
+ actionsManager = new QNetworkAccessManager(this);
+ connect(actionsManager, SIGNAL(finished(QNetworkReply*)),this, SLOT(actionsSlot(QNetworkReply*)));
+ reply = actionsManager->get(request);
 }
 
 
 void BankActions::on_btnActionsPrevious_clicked()
 {
+  ttSivu = ttSivu - 1;
+  if(ttSivu == 0){
+      ttSivu =1;
+  };
+  QString site_url=objectMyUrl->getBaseUrl()+"/tilitapahtumat/get/"+tili_id+"/"+QString::number(ttSivu)+"/10";
+  QNetworkRequest request((site_url));
+  request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
+  //WEBTOKEN ALKU
+  request.setRawHeader(QByteArray("Authorization"),(webtoken));
+  //WEBTOKEN LOPPU
+
+  actionsManager = new QNetworkAccessManager(this);
+  connect(actionsManager, SIGNAL(finished(QNetworkReply*)),this, SLOT(actionsSlot(QNetworkReply*)));
+  reply = actionsManager->get(request);
+  qDebug() << ttSivu;
 }
 
 
