@@ -32,7 +32,10 @@ BankActions::~BankActions()
 
 void BankActions::on_btnActionsNext_clicked()
 {
- ttSivu = ttSivu + 1;
+    ttSivu = ttSivu - 1;
+    if(ttSivu == 0){
+        ttSivu =1;
+    }
  qDebug() << ttSivu;
  QString site_url=objectMyUrl->getBaseUrl()+"/tilitapahtumat/get/"+tili_id+"/"+QString::number(ttSivu)+"/10";
  QNetworkRequest request((site_url));
@@ -50,10 +53,7 @@ void BankActions::on_btnActionsNext_clicked()
 
 void BankActions::on_btnActionsPrevious_clicked()
 {
-  ttSivu = ttSivu - 1;
-  if(ttSivu == 0){
-      ttSivu =1;
-  };
+  ttSivu = ttSivu + 1;
   QString site_url=objectMyUrl->getBaseUrl()+"/tilitapahtumat/get/"+tili_id+"/"+QString::number(ttSivu)+"/10";
   QNetworkRequest request((site_url));
   request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");

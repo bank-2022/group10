@@ -13,17 +13,17 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QPushButton" name="btnActionsPrevious">
+  <widget class="QPushButton" name="btnActionsNext">
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>160</y>
+     <y>100</y>
      <width>111</width>
      <height>31</height>
     </rect>
    </property>
    <property name="text">
-    <string>Näytä edelliset</string>
+    <string>Näytä seuraavat</string>
    </property>
   </widget>
   <widget class="QPushButton" name="btnActionsClose">
@@ -39,17 +39,17 @@
     <string>Sulje</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="btnActionsNext">
+  <widget class="QPushButton" name="btnActionsPrevious">
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>100</y>
+     <y>160</y>
      <width>111</width>
      <height>31</height>
     </rect>
    </property>
    <property name="text">
-    <string>Näytä seuraavat</string>
+    <string>Näytä edelliset</string>
    </property>
   </widget>
   <widget class="QTextEdit" name="BankActionScreen">
