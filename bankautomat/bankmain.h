@@ -20,6 +20,7 @@ class BankMain : public QDialog
 
 public:
     explicit BankMain(QString rfid, QByteArray token, QWidget *parent = nullptr);
+    void BankMainActions();
     ~BankMain();
 
 private slots:
@@ -43,7 +44,6 @@ private:
     QNetworkReply *reply;
     QByteArray response_data;
     QString korttinumero;
-    QString tili_id;
     QString id_tili;
     QString id_kortti;
     QString saldo;

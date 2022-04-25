@@ -8,7 +8,6 @@ BankMain::BankMain(QString rfid, QByteArray token, QWidget *parent) :
 {
     ui->setupUi(this);
     korttinumero=rfid;
-    tili_id = id_tili;
     objectMyUrl=new MyUrl;
     objectMyUrl2=new MyUrl;
     webtoken=token;
@@ -16,22 +15,14 @@ BankMain::BankMain(QString rfid, QByteArray token, QWidget *parent) :
     QNetworkRequest request((site_url));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
-    QString site_url2=objectMyUrl2->getBaseUrl()+"/tilitapahtumat/"+tili_id;
-    QNetworkRequest request2((site_url2));
-    request2.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
 
     //WEBTOKEN ALKU
     request.setRawHeader(QByteArray("Authorization"),(webtoken));
-    request2.setRawHeader(QByteArray("Authorization"),(webtoken));
     //WEBTOKEN LOPPU
 
     accountManager = new QNetworkAccessManager(this);
     connect(accountManager, SIGNAL(finished(QNetworkReply*)),this, SLOT(accountSlot(QNetworkReply*)));
     reply = accountManager->get(request);
-    actionsManager = new QNetworkAccessManager(this);
-    connect(actionsManager, SIGNAL(finished(QNetworkReply*)),this, SLOT(actionsSlot(QNetworkReply*)));
-    reply = actionsManager->get(request2);
 }
 
 BankMain::~BankMain()
@@ -74,7 +65,21 @@ void BankMain::accountSlot(QNetworkReply *reply)
 
     ui->labelSum->setText(saldo);
     ui->labelSum->adjustSize();
+    BankMainActions();
 }
+void BankMain::BankMainActions()
+{
+    QString site_url2=objectMyUrl2->getBaseUrl()+"/tilitapahtumat/"+id_tili;
+    QNetworkRequest request2((site_url2));
+    request2.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    request2.setRawHeader(QByteArray("Authorization"),(webtoken));
+
+    actionsManager = new QNetworkAccessManager(this);
+    connect(actionsManager, SIGNAL(finished(QNetworkReply*)),this, SLOT(actionsSlot(QNetworkReply*)));
+    reply = actionsManager->get(request2);
+}
+
 
 void BankMain::actionsSlot(QNetworkReply *reply)
 {
