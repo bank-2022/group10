@@ -7,9 +7,10 @@ const tilitapahtumat = {
   getAll: function(callback) {
     return db.query('select * from tilitapahtumat', callback);
   },
-  get10: function(ttSivu, callback) {
+  get: function(id, ttSivu, rivit, callback) {
     ttSivu = (ttSivu - 1) * 10;
-    return db.query('select * from tilitapahtumat LIMIT ?, 10',[ttSivu], callback);
+    rivit = parseInt(rivit);
+    return db.query('select date_format (paivays,"%d-%m-%Y %h:%i:%s") as "paivays", tapahtuma, summa from tilitapahtumat where id_tili=? LIMIT ?, ?',[id, ttSivu, rivit], callback);
   },
   add: function(tilitapahtumat, callback) {
     return db.query(

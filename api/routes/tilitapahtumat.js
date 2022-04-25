@@ -2,13 +2,14 @@ const express = require('express');
 const router = express.Router();
 const tilitapahtumat = require('../models/tilitapahtumat_model');
 let ttSivu = 1;
+let rivit = 10;
 
 
-router.get('/get10/:ttSivu',
+router.get('/get/:id/:ttSivu/:rivit',
 function(request, response) {
   if (request.params.ttSivu) {
      
-    tilitapahtumat.get10(request.params.ttSivu, function(err, dbResult) {
+    tilitapahtumat.get(request.params.id, request.params.ttSivu, request.params.rivit, function(err, dbResult) {
       if (err) {
         response.json(err);
       } else {
