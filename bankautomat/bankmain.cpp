@@ -1,7 +1,6 @@
 #include "bankmain.h"
 #include "ui_bankmain.h"
 
-
 BankMain::BankMain(QString rfid, QByteArray token, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::BankMain)
@@ -69,7 +68,7 @@ void BankMain::accountSlot(QNetworkReply *reply)
 }
 void BankMain::BankMainActions()
 {
-    QString site_url2=objectMyUrl2->getBaseUrl()+"/tilitapahtumat/"+id_tili;
+    QString site_url2=objectMyUrl2->getBaseUrl()+"/tilitapahtumat/get/"+id_tili+"/1/5";     //1.Sivu 5 ensimmäistä tilitapahtumaa
     QNetworkRequest request2((site_url2));
     request2.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 

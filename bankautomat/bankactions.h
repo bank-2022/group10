@@ -39,6 +39,7 @@ private:
     QString korttinumero;
     QByteArray webtoken;
     QString tili_id;
+    int ttSivu = 1;
 };
 
 #endif // BANKACTIONS_H
