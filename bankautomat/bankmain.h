@@ -49,7 +49,6 @@ private:
     QString saldo;
     QByteArray webtoken;
     int ttSivu;
-    int rivit;
 };
 
 #endif // BankMain_H
