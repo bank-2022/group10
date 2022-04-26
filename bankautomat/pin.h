@@ -31,6 +31,7 @@ private slots:
     void NumPressed();
 
     void pinSlot(QNetworkReply *reply);
+    void loginSlot(QNetworkReply *reply2);
 
 private:
     Ui::Pin *ui;
@@ -39,11 +40,15 @@ private:
     MyUrl *objectMyUrl;
     QString base_url;
     QNetworkAccessManager *pinManager;
+    QNetworkAccessManager *loginManager;
     QNetworkReply *reply;
+    QNetworkReply *reply2;
     QByteArray response_data;
     QByteArray webtoken;
     BankMain *objectBankMain;
-    int loginAttempts = 3;
+    int loginAttempts = 2;
+    int loginAttemptsLeft;
+    int dbAttempts;
 
 };
 

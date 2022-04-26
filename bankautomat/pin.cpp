@@ -65,14 +65,31 @@ void Pin::on_pushButton_OK_clicked()
     QNetworkRequest request((base_url+"/login"));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
-
     pinManager = new QNetworkAccessManager(this);
     connect(pinManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(pinSlot(QNetworkReply*)));
 
     reply = pinManager->post(request, QJsonDocument(jsonObj).toJson());
+
+    QNetworkRequest request2((base_url+"/kortti/logintries/"+rfid));
+    request2.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    loginManager = new QNetworkAccessManager(this);
+    connect(loginManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(loginSlot(QNetworkReply*)));
+
+    reply2 = loginManager->get(request2);
 }
 
+void Pin::loginSlot(QNetworkReply *reply2)
+{
+ response_data=reply2->readAll();
+ qDebug()<<rfid;
+ dbAttempts=response_data.toInt();
+ qDebug()<< "db attempts"<< dbAttempts;
+ loginAttemptsLeft=loginAttempts-dbAttempts;
+ qDebug()<< "db left"<<loginAttemptsLeft;
 
+
+}
 
 void Pin::pinSlot(QNetworkReply *reply)
 {
@@ -96,14 +113,15 @@ void Pin::pinSlot(QNetworkReply *reply)
     }
     else  {
         ui->lineEditPin->clear();
+        loginAttemptsLeft=loginAttempts-dbAttempts;
         qDebug() <<"ERROR";
         loginAttempts--;
-        qDebug() <<"Attempts left: "<<loginAttempts;
-        ui->labelStatus->setText("Sinulla on "+QString::number(loginAttempts)+" kirjautumisyritystä jäljellä");
-        if (loginAttempts==1){
-          ui->labelStatus->setText("Sinulla on "+QString::number(loginAttempts)+" kirjautumisyritys jäljellä");
+        qDebug() <<"Attempts left: "<<loginAttemptsLeft;
+        ui->labelStatus->setText("Sinulla on "+QString::number(loginAttemptsLeft)+" kirjautumisyritystä jäljellä");
+        if (loginAttemptsLeft==1){
+          ui->labelStatus->setText("Sinulla on "+QString::number(loginAttemptsLeft)+" kirjautumisyritys jäljellä");
         }
-        if (loginAttempts<1){
+        if (loginAttemptsLeft<1){
             qDebug() << "Too many invalid login attempts";
             ui->labelStatus->setText("Korttisi on lukittu. Ota yhteyttä pankkiin.");
             ui->frame->setEnabled(false);
@@ -111,4 +129,5 @@ void Pin::pinSlot(QNetworkReply *reply)
         }
     }
 }
+
 

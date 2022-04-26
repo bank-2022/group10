@@ -22,10 +22,10 @@ router.get('/:id?',
     });
   }
 });
-router.get('/logintries/:id',
+router.get('/logintries/:korttinumero',
 function(request, response) {
-  if (request.params.id) {
-    kortti.getLoginTries(request.params.id, function(err, dbResult) {
+  if (request.params.korttinumero) {
+    kortti.getLoginTries(request.params.korttinumero, function(err, dbResult) {
       if (err) {
         response.json(err);
       } else {
