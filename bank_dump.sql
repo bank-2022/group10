@@ -1,6 +1,6 @@
--- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: bank
+-- Host: localhost    Database: bank
 -- ------------------------------------------------------
 -- Server version	8.0.23
 
@@ -99,7 +99,7 @@ CREATE TABLE `kortti` (
 
 LOCK TABLES `kortti` WRITE;
 /*!40000 ALTER TABLE `kortti` DISABLE KEYS */;
-INSERT INTO `kortti` VALUES (1,'05009B22B2','$2a$10$Y61m2.ZoIJgDq9rHX3we/uX3ca7ZdqHD1tT2kT/uBYvLfCZQGIb7e',1,1,'FALSE'),(2,'06000620AD','$2a$10$hdPTewBxl4dbJMf8HN2pfupJ/X9Cfuuc/bWL4w5UVUqZBWjE8I.Km',2,2,'TRUE');
+INSERT INTO `kortti` VALUES (1,'05009B22B2','$2a$10$Y61m2.ZoIJgDq9rHX3we/uX3ca7ZdqHD1tT2kT/uBYvLfCZQGIb7e',1,1,'FALSE'),(2,'06000620AD','$2a$10$hdPTewBxl4dbJMf8HN2pfupJ/X9Cfuuc/bWL4w5UVUqZBWjE8I.Km',2,2,'FALSE');
 /*!40000 ALTER TABLE `kortti` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -126,7 +126,7 @@ CREATE TABLE `tili` (
 
 LOCK TABLES `tili` WRITE;
 /*!40000 ALTER TABLE `tili` DISABLE KEYS */;
-INSERT INTO `tili` VALUES (1,'FI4950009420028730',530),(2,'FI4966010001234568',1000);
+INSERT INTO `tili` VALUES (1,'FI4950009420028730',2270),(2,'FI4966010001234568',1000);
 /*!40000 ALTER TABLE `tili` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -162,39 +162,6 @@ LOCK TABLES `tilitapahtumat` WRITE;
 INSERT INTO `tilitapahtumat` VALUES (1,'2022-03-31 18:00:00','otto',-50,1,1),(2,'2022-04-21 17:55:02','otto',-200,1,1),(3,'2022-04-21 18:01:59','otto',-50,1,1),(4,'2022-04-21 18:02:45','otto',-20,1,1),(5,'2022-04-21 19:45:29','otto',-20,1,1),(6,'2022-04-21 19:45:43','otto',-100,1,1),(7,'2022-04-21 21:05:18','otto',-20,1,1),(8,'2022-04-21 21:05:38','otto',-30,1,1),(9,'2022-04-21 23:14:14','otto',-30,1,1);
 /*!40000 ALTER TABLE `tilitapahtumat` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping routines for database 'bank'
---
-/*!50003 DROP PROCEDURE IF EXISTS `debit_transfer` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `debit_transfer`(IN card_id INT, IN account_id INT, IN amount FLOAT )
-BEGIN
-DECLARE test1 INT DEFAULT 0;
-  START TRANSACTION;
-  UPDATE tili SET saldo=saldo+amount WHERE id_tili=account_id AND saldo>=amount;
-  SET test1=ROW_COUNT();
-  
-    IF (test1 > 0 AND amount<0 ) THEN   
-      COMMIT;    
-      INSERT INTO tilitapahtumat(paivays,tapahtuma,summa,id_kortti, id_tili) VALUES(NOW(),'otto', amount, card_id, account_id);
-    ELSE
-      ROLLBACK;
-  END IF;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -205,4 +172,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-22  8:43:08
+-- Dump completed on 2022-04-26 10:27:00

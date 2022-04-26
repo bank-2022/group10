@@ -7,6 +7,8 @@ const dotenv = require('dotenv');
 const kortti = require('../models/kortti_model');
 const cardLocked = "cardLocked";
 
+let tries = 0;
+
 
 
 router.post('/', 
@@ -38,11 +40,21 @@ router.post('/',
                   bcrypt.compare(pin,dbResult[0].pin, function(err,compareResult) {
                     if(compareResult) {                         
                       console.log("succes");
+                      tries = 0;
                       const token = generateAccessToken({ korttinumero: korttinumero });
                       response.send(token);
                     }
                     else {
                         console.log("wrong pin");
+                        if (tries <2){
+                          tries = tries +1
+                          console.log("yrityksiä käytetty ", tries);
+                        } else if (tries = 2){
+                          login.lockCard(korttinumero, function(dbError, dbResult){});
+                          console.log("card locked");
+                          tries = 0;
+                          
+                        }
                         response.send(false);
                     }			
                   }
