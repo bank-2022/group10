@@ -2,7 +2,7 @@
 #define LOGIN_H
 
 #include "pin.h"
-
+#include "banktimer.h"
 #include <QDialog>
 
 
@@ -18,8 +18,13 @@ public:
     explicit Login(QWidget *parent = nullptr);
     ~Login();
 
+
+
 private slots:
     void on_btnLoginLogin_clicked();
+
+signals:
+    void timeReset_signal(states,events);
 
 
 private:
@@ -27,6 +32,7 @@ private:
     QString rfid;
 
     Pin *objectPin;
+    bankTimer * pBankTimer;
 
 
 };

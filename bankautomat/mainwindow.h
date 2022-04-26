@@ -3,6 +3,7 @@
 
 #include "login.h"
 #include "pin.h"
+#include "banktimer.h"
 
 #include <QMainWindow>
 #include <QSerialPort>
@@ -21,9 +22,15 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+public slots:
+    void timeoutHandler();
+
 private slots:
     void on_btnLogin_clicked();
     void serialReadyRead();
+
+signals:
+   void timeStart_signal(states,events);
 
 
 private:
@@ -32,5 +39,6 @@ private:
     QSerialPort *mSerial;
     QString rfid;
     Pin *objectPin;
+    bankTimer * pBanktimer;
 };
 #endif // MAINWINDOW_H
