@@ -107,6 +107,7 @@ void BankMain::on_buttonActions_clicked()
 {
     objectBankActions = new BankActions(id_tili,webtoken);
     objectBankActions->show();
+
 }
 
 
