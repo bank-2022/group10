@@ -70,7 +70,7 @@ void Pin::on_pushButton_OK_clicked()
 
     reply = pinManager->post(request, QJsonDocument(jsonObj).toJson());
 
-    QNetworkRequest request2((base_url+"/kortti/logintries/"+rfid));
+    QNetworkRequest request2((base_url+"/login/logintries/"+rfid));
     request2.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
     loginManager = new QNetworkAccessManager(this);
@@ -83,6 +83,7 @@ void Pin::loginSlot(QNetworkReply *reply2)
 {
  response_data=reply2->readAll();
  qDebug()<<rfid;
+ qDebug() << response_data;
  dbAttempts=response_data.toInt();
  qDebug()<< "db attempts"<< dbAttempts;
  loginAttemptsLeft=loginAttempts-dbAttempts;
@@ -115,7 +116,7 @@ void Pin::pinSlot(QNetworkReply *reply)
         ui->lineEditPin->clear();
         loginAttemptsLeft=loginAttempts-dbAttempts;
         qDebug() <<"ERROR";
-        loginAttempts--;
+        // loginAttempts--;
         qDebug() <<"Attempts left: "<<loginAttemptsLeft;
         ui->labelStatus->setText("Sinulla on "+QString::number(loginAttemptsLeft)+" kirjautumisyritystä jäljellä");
         if (loginAttemptsLeft==1){
