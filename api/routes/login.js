@@ -12,7 +12,7 @@ let tries = 0;
 router.get('/logintries/:korttinumero',
 function(request, response) {
   if (request.params.korttinumero) {
-    kortti.getLoginTries(request.params.korttinumero, function(err, dbResult) {
+    login.getLoginTries(request.params.korttinumero, function(err, dbResult) {
       if (err) {
         response.json(err);
       } else {
