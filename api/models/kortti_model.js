@@ -6,9 +6,7 @@ const kortti = {
   getById: function(id, callback) {
     return db.query('select * from kortti where id_kortti=?', [id], callback);
   },
-  getLoginTries: function(korttinumero, callback) {
-    return db.query('select login_tries from kortti where korttinumero=?', [korttinumero], callback);
-  },
+ 
   getAll: function(callback) {
     return db.query('select * from kortti', callback);
   },
