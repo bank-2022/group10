@@ -31,6 +31,7 @@ private:
     Ui::Login *ui;
     QString rfid;
 
+
     Pin *objectPin;
     bankTimer * pBankTimer;
 

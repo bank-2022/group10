@@ -18,7 +18,7 @@ const login={
       return db.query('UPDATE kortti SET login_tries = ? WHERE korttinumero = ?',[dbTries, korttinumero], callback); 
     },
   getLoginTries: function(korttinumero, callback) {
-      return db.query('select login_tries from kortti where korttinumero=?', [korttinumero], callback);
+      return db.query('SELECT login_tries from kortti where korttinumero=?', [korttinumero], callback);
     }
 };
           
