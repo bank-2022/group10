@@ -27,9 +27,11 @@ private slots:
 
     void accountSlot(QNetworkReply *reply);
     void actionsSlot(QNetworkReply *reply);
+    void updateSlot(QNetworkReply *reply);
     void on_buttonDrawMoney_clicked();
     void on_buttonActions_clicked();
     void on_buttonLogOut_clicked();
+    void updateBalance();
 
 
 private:

@@ -113,6 +113,7 @@ void DrawMoney::debitSlot(QNetworkReply *reply)
 
 void DrawMoney::on_btnDrawClose_clicked()
 {
+    emit updateSignal();
     this->close();
 }
 

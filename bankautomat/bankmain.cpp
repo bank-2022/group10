@@ -96,10 +96,31 @@ void BankMain::actionsSlot(QNetworkReply *reply)
     ui->MainActions->setText(tapahtumat);
 }
 
+void BankMain::updateSlot(QNetworkReply *reply)
+{
+    response_data=reply->readAll();
+    qDebug()<<response_data;
+
+    QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
+    QJsonArray json_array = json_doc.array();
+
+
+    foreach (const QJsonValue &value, json_array) {
+        QJsonObject json_obj = value.toObject();
+        saldo+=QString::number(json_obj["saldo"].toInt());
+    }
+
+    this->ui->labelSum->setText(saldo);
+    ui->labelSum->adjustSize();
+    BankMainActions();
+}
+
 void BankMain::on_buttonDrawMoney_clicked()
 {
     objectDrawMoney = new DrawMoney(id_kortti, id_tili, webtoken);
+    connect(objectDrawMoney, SIGNAL(updateSignal()), this, SLOT(updateBalance()));
     objectDrawMoney->show();
+    saldo=QString();
 }
 
 
@@ -114,6 +135,22 @@ void BankMain::on_buttonActions_clicked()
 void BankMain::on_buttonLogOut_clicked()
 {
     this->close();
+}
+
+void BankMain::updateBalance()
+{
+    QString site_url=objectMyUrl->getBaseUrl()+"/asiakas/tili/"+korttinumero;
+    QNetworkRequest request((site_url));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+
+    //WEBTOKEN ALKU
+    request.setRawHeader(QByteArray("Authorization"),(webtoken));
+    //WEBTOKEN LOPPU
+
+    accountManager = new QNetworkAccessManager(this);
+    connect(accountManager, SIGNAL(finished(QNetworkReply*)),this, SLOT(updateSlot(QNetworkReply*)));
+    reply = accountManager->get(request);
 }
 
 
