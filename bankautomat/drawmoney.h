@@ -21,6 +21,9 @@ public:
     explicit DrawMoney(QString id_kortti, QString id_tili, QByteArray token, QWidget *parent = nullptr);
     ~DrawMoney();
 
+signals:
+    void updateSignal();
+
 private slots:
     void debitSlot(QNetworkReply *reply);
     void buttonClicked();
