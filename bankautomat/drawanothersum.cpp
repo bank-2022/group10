@@ -27,11 +27,16 @@ QString DrawAnotherSum::sum() const
     return ui->lineEditAmount->text();
 }
 
-
-void DrawAnotherSum::on_pushButtonOK_clicked()
+void DrawAnotherSum::timeoutDrawAnotherSum_slot()
 {
-   ui->pushButtonOK->setEnabled(!ui->lineEditAmount->text().isEmpty());
-
+    this->close();
 }
 
 
+
+void DrawAnotherSum::on_pushButtonOK_clicked()
+{
+   emit drawxBtnPressed_signal();
+   ui->pushButtonOK->setEnabled(!ui->lineEditAmount->text().isEmpty());
+
+}

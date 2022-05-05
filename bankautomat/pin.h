@@ -1,15 +1,10 @@
 #ifndef PIN_H
 #define PIN_H
 
-#include "bankmain.h"
-#include "myurl.h"
-
-
 #include <QDialog>
-#include <QtNetwork>
-#include <QNetworkAccessManager>
 #include <QJsonDocument>
 #include <QTimer>
+
 
 namespace Ui {
 class Pin;
@@ -23,32 +18,33 @@ public:
     explicit Pin(QString korttinumero, QWidget *parent = nullptr);
     ~Pin();
 
-private slots:
 
+signals:
+    void pinBtnPress_signal();
+    void pinCancel_signal();
+    void pinOk_signal();
+    void pin_signal(QString);
+
+public slots:
+    void cardLocked_slot();
+    void loginSuccess_slot();
+    void wrongPin_slot();
+    void attemptsLeft_slot(int);
+    void timeoutPin_slot();
+
+private slots:
     void on_pushButton_Cancel_clicked();
     void on_pushButton_Clear_clicked();
     void on_pushButton_OK_clicked();
     void NumPressed();
 
-    void pinSlot(QNetworkReply *reply);
-    void loginSlot(QNetworkReply *reply2);
+
 
 private:
     Ui::Pin *ui;
     QString rfid;
     QString pin;
-    MyUrl *objectMyUrl;
-    QString base_url;
-    QNetworkAccessManager *pinManager;
-    QNetworkAccessManager *loginManager;
-    QNetworkReply *reply;
-    QNetworkReply *reply2;
-    QByteArray response_data;
-    QByteArray webtoken;
-    BankMain *objectBankMain;
-    int loginAttempts = 2;
-    int loginAttemptsLeft;
-    int dbAttempts;
+
 
 };
 

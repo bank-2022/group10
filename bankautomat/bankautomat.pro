@@ -14,7 +14,6 @@ CONFIG += c++11
 SOURCES += \
     bankactions.cpp \
     bankmain.cpp \
-    banktimer.cpp \
     drawanothersum.cpp \
     drawmoney.cpp \
     login.cpp \
@@ -26,7 +25,6 @@ SOURCES += \
 HEADERS += \
     bankactions.h \
     bankmain.h \
-    banktimer.h \
     drawanothersum.h \
     drawmoney.h \
     login.h \

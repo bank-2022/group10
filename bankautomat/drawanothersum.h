@@ -17,6 +17,12 @@ public:
     void setSum(const QString &sum);
     QString sum() const;
 
+public slots:
+    void timeoutDrawAnotherSum_slot();
+
+signals:
+    void drawxBtnPressed_signal();
+
 private slots:
     void on_pushButtonOK_clicked();
 
