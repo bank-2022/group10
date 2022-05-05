@@ -1,13 +1,8 @@
 #ifndef DRAWMONEY_H
 #define DRAWMONEY_H
 
-#include "myurl.h"
-#include "drawanothersum.h"
-
 #include <QDialog>
-#include <QtNetwork>
-#include <QNetworkAccessManager>
-#include <QJsonDocument>
+
 
 namespace Ui {
 class DrawMoney;

@@ -16,11 +16,12 @@
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
 #include <QTimer>
+#include <QModelIndex>
 
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }              // KATO TARTTEEKO NOITA KAIKKIA INCLUDEJA
+namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
 
@@ -28,21 +29,21 @@ enum states
 {
     loggedOut,              // tässä tilakoneen tilat, nimetty sen mukaan,
     enteringPin,            // millä kirjautumisasteella ne vaikuttavat.
-    mainMenu,               // tier0 on pohjataso, tier1 on login-tila,
-    accDetails,             // tier2 bankmain ja tier3 bankactions ja nostoruudut.
-    drawing,                //  Tällä tavoin voidaan hallita mihin ruutuun palataan,
-    specifying              // kun ajastin laukeaa, ja paljonko aikaa ajastimeen
-                            // säädetään.
+    mainMenu,
+    accDetails,
+    drawing,
+    specifying
+
 };
 enum events
 {
-    standBy,              // kun aloitetaan login käytetään tätä.
-    moveState,               // kun tasojen välillä liikutaan.
-    moveState2,
-    timeReset,              // tällä resetataan aika, ei välttämättä ole tarpeellinen...
+    standBy,                // Alussa ollaan tässä.
+    moveState,              // kun tasojen välillä liikutaan.
+    moveState2,             // Tukemassa tasojen välillä liikkumista kun on useampi v/e
+    timeReset,              // tällä resetataan aika
     timeStart,              // tällä käynnistetään ajastin.
     timerExpires,           // käsitellään välivaiheella ajan loppuminen.
-    loggingOut
+    loggingOut              // poistutaan takaisin pohjatilaan
 };
 
 class MainWindow : public QMainWindow

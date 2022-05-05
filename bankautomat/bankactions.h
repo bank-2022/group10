@@ -1,13 +1,7 @@
 #ifndef BANKACTIONS_H
 #define BANKACTIONS_H
 
-#include "myurl.h"
-
 #include <QDialog>
-#include <QModelIndex>
-#include <QtNetwork>
-#include <QNetworkAccessManager>
-#include <QJsonDocument>
 
 
 namespace Ui {

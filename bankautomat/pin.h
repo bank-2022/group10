@@ -1,14 +1,10 @@
 #ifndef PIN_H
 #define PIN_H
 
-
-
-
 #include <QDialog>
-#include <QtNetwork>
-#include <QNetworkAccessManager>
 #include <QJsonDocument>
 #include <QTimer>
+
 
 namespace Ui {
 class Pin;
@@ -37,7 +33,6 @@ public slots:
     void timeoutPin_slot();
 
 private slots:
-
     void on_pushButton_Cancel_clicked();
     void on_pushButton_Clear_clicked();
     void on_pushButton_OK_clicked();

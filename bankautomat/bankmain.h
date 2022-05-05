@@ -6,9 +6,7 @@
 #include "drawmoney.h"
 
 #include <QDialog>
-#include <QtNetwork>
-#include <QNetworkAccessManager>
-#include <QJsonDocument>
+
 
 namespace Ui {
 class BankMain;
@@ -41,21 +39,6 @@ private slots:
 
 private:
     Ui::BankMain *ui;
-    MyUrl *objectMyUrl;
-    MyUrl *objectMyUrl2;
-    BankActions *objectBankActions;
-    DrawMoney *objectDrawMoney;
-
-    QNetworkAccessManager *accountManager;
-    QNetworkAccessManager *actionsManager;
-    QNetworkReply *reply;
-    QByteArray response_data;
-    QString korttinumero;
-    QString id_tili;
-    QString id_kortti;
-    QString saldo;
-    QByteArray webtoken;
-    int ttSivu;
 };
 
 #endif // BankMain_H

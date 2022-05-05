@@ -1,14 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-
-/*************************************
-
-  RAKENTAJA
-
-**************************************/
-
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -97,14 +89,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 }
 
-
-/*************************************
-
-  TUHOAJA
-
-**************************************/
-
-
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -119,14 +103,6 @@ MainWindow::~MainWindow()
     objectPin=nullptr;
 }
 
-
-/*************************************
-
-  LOGIN NAPIN FUNKTIO
-
-**************************************/
-
-
 void MainWindow::on_btnLogin_clicked()
 {
 objectLogin->show();
@@ -136,7 +112,7 @@ objectLogin->show();
 
 /*************************************
 
-  RFID LUKIJAN SLOTTI
+  RFID LUKIJA HYPPÄÄ TÄSSÄ SISÄÄN KYTKETTYNÄ
 
 **************************************/
 
@@ -149,6 +125,9 @@ void MainWindow::serialReadyRead()
     rfid.chop(3);
     qDebug() << rfid;
     objectPin = new Pin(rfid);
+    State = loggedOut;
+    Event = moveState;
+    emit moveState_signal(State,Event);
     objectPin->show();
 
 
@@ -212,7 +191,7 @@ void MainWindow::korttinumero_slot(QString rfidnro)
 
 /*************************************
 
-  PIN                            PINNISSÄ ON JOKU ERRORI KUN LAITTAA VÄÄRÄN SALASANAN
+                    PIN
 
 **************************************/
 
@@ -301,14 +280,6 @@ void MainWindow::pinSlot(QNetworkReply *reply)
         }
     }
 }
-
-
-/*************************************
-
-  PIN-RUUDUN KLIKKIHÄNDLERI
-
-**************************************/
-
 
 void MainWindow::loginLogin_slot()
 {
@@ -463,13 +434,6 @@ void MainWindow::updateBalance()
     reply = accountManager->get(request);
 }
 
-
-/*************************************
-
-  BANKMAIN-RUUDUN KLIKKIHÄNDLERI
-
-**************************************/
-
 void MainWindow::drawMoney_slot()
 {
     objectDrawMoney = new DrawMoney(id_kortti, id_tili, webtoken);
@@ -527,9 +491,6 @@ void MainWindow::bankActions_slot()
 
     objectBankActions->show();
 }
-
-
-
 
 
 /*************************************
