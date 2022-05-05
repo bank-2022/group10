@@ -20,19 +20,24 @@ class BankMain : public QDialog
 
 public:
     explicit BankMain(QString rfid, QByteArray token, QWidget *parent = nullptr);
-    void BankMainActions();
     ~BankMain();
 
-private slots:
+signals:
+    void drawMoney_signal();
+    void bankActions_signal();
+    void logOut_signal();
 
-    void accountSlot(QNetworkReply *reply);
-    void actionsSlot(QNetworkReply *reply);
-    void updateSlot(QNetworkReply *reply);
+public slots:
+    void nimi_slot(QString);
+    void saldo_slot(QString);
+    void tapahtumat_slot(QString);
+    void saldoUpdate_slot(QString);
+    void timeoutBankMain_slot();
+
+private slots:
     void on_buttonDrawMoney_clicked();
     void on_buttonActions_clicked();
     void on_buttonLogOut_clicked();
-    void updateBalance();
-
 
 private:
     Ui::BankMain *ui;

@@ -6,8 +6,8 @@ Pin::Pin(QString korttinumero, QWidget *parent) :
     ui(new Ui::Pin)
 {
     ui->setupUi(this);
-    objectMyUrl=new MyUrl;
-    base_url=objectMyUrl->getBaseUrl();
+
+
     rfid=korttinumero;
     qDebug() << rfid;
     ui->labelStatus->setText("Näppäile tunnusluku\n\nLopuksi paina OK");
@@ -18,7 +18,11 @@ Pin::Pin(QString korttinumero, QWidget *parent) :
         numButtons[i] = Pin::findChild<QPushButton *>(buttonName);
         connect(numButtons[i],SIGNAL(released()), this,
                 SLOT(NumPressed()));
+
+
+
     }
+
 }
 
 Pin::~Pin()
@@ -26,11 +30,14 @@ Pin::~Pin()
     delete ui;
 }
 
+
+
 void Pin::NumPressed()
 {
     QPushButton *button =(QPushButton *)sender();
     QString buttonValue = button->text();
     QString displayValue = ui->lineEditPin->text();
+    emit pinBtnPress_signal();
     if(displayValue.isEmpty()){
         ui->lineEditPin->setText(buttonValue);
     }
@@ -42,6 +49,7 @@ void Pin::NumPressed()
 
 void Pin::on_pushButton_Cancel_clicked()
 {
+    emit pinCancel_signal();
     this->close();
 }
 
@@ -51,6 +59,7 @@ void Pin::on_pushButton_Clear_clicked()
     QString text = ui->lineEditPin->text();
     text.chop(1);
     ui->lineEditPin->setText(text);
+    emit pinBtnPress_signal();
 }
 
 
@@ -58,77 +67,41 @@ void Pin::on_pushButton_OK_clicked()
 {
     qDebug() <<"on_pushButton_OK_clicked()";
     pin=ui->lineEditPin->text();
-    QJsonObject jsonObj;
-    jsonObj.insert("korttinumero",rfid);
-    jsonObj.insert("pin",pin);
 
-    QNetworkRequest request((base_url+"/login"));
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
-    pinManager = new QNetworkAccessManager(this);
-    connect(pinManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(pinSlot(QNetworkReply*)));
-
-    reply = pinManager->post(request, QJsonDocument(jsonObj).toJson());
-
-    QNetworkRequest request2((base_url+"/login/logintries/"+rfid));
-    request2.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
-    loginManager = new QNetworkAccessManager(this);
-    connect(loginManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(loginSlot(QNetworkReply*)));
-
-    reply2 = loginManager->get(request2);
+    emit pin_signal(pin);
+    qDebug() <<"pin lähetetty";
+    emit pinOk_signal();
+    qDebug() <<"pinOk signaali lähetetty";
 }
 
-void Pin::loginSlot(QNetworkReply *reply2)
+void Pin::cardLocked_slot()
 {
- response_data=reply2->readAll();
- qDebug()<<rfid;
- qDebug() << response_data;
- dbAttempts=response_data.toInt();
- qDebug()<< "db attempts"<< dbAttempts;
- loginAttemptsLeft=loginAttempts-dbAttempts;
- qDebug()<< "db left"<<loginAttemptsLeft;
-
-
+    ui->labelStatus->setText("Korttisi on lukittu. Ota yhteyttä pankkiin.");
+    ui->frame->setEnabled(false);
+    QTimer::singleShot(3000,this,SLOT(close()));
 }
 
-void Pin::pinSlot(QNetworkReply *reply)
+void Pin::loginSuccess_slot()
 {
-    response_data=reply->readAll();
-    qDebug() <<response_data;
+    this->close();
+}
 
-    if (response_data =="cardLocked")
-    {
-         qDebug() <<"ERROR: card locked!";
-         ui->labelStatus->setText("Korttisi on lukittu. Ota yhteyttä pankkiin.");
-         ui->frame->setEnabled(false);
-         QTimer::singleShot(3000,this,SLOT(close()));
-    }
-    else if (response_data!="false") {
-        webtoken="Bearer "+response_data;
+void Pin::wrongPin_slot()
+{
+    ui->lineEditPin->clear();
+}
 
-        objectBankMain = new BankMain(rfid, webtoken);
+void Pin::attemptsLeft_slot(int attemptfail)
+{
+    ui->labelStatus->setText("Sinulla on "+QString::number(attemptfail)+" kirjautumisyritystä jäljellä");
+    if (attemptfail==1){
+      ui->labelStatus->setText("Sinulla on "+QString::number(attemptfail)+" kirjautumisyritys jäljellä");
+    }
+}
 
-        objectBankMain->show();
-        this->close();
-    }
-    else  {
-        ui->lineEditPin->clear();
-        loginAttemptsLeft=loginAttempts-dbAttempts;
-        qDebug() <<"ERROR";
-        // loginAttempts--;
-        qDebug() <<"Attempts left: "<<loginAttemptsLeft;
-        ui->labelStatus->setText("Sinulla on "+QString::number(loginAttemptsLeft)+" kirjautumisyritystä jäljellä");
-        if (loginAttemptsLeft==1){
-          ui->labelStatus->setText("Sinulla on "+QString::number(loginAttemptsLeft)+" kirjautumisyritys jäljellä");
-        }
-        if (loginAttemptsLeft<1){
-            qDebug() << "Too many invalid login attempts";
-            ui->labelStatus->setText("Korttisi on lukittu. Ota yhteyttä pankkiin.");
-            ui->frame->setEnabled(false);
-            QTimer::singleShot(3000,this,SLOT(close()));
-        }
-    }
+void Pin::timeoutPin_slot()
+{
+    this->close();
 }
 
 

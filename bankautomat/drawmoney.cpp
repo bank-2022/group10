@@ -7,11 +7,7 @@ DrawMoney::DrawMoney(QString id_kortti, QString id_tili, QByteArray token, QWidg
 {
     ui->setupUi(this);
     setModal(true);
-    objectMyUrl=new MyUrl;
-    base_url=objectMyUrl->getBaseUrl();
-    kortti_id=id_kortti;
-    tili_id=id_tili;
-    webtoken=token;
+
     ui->labelStatus->setText("Valitse summa");
 
     buttons.append(ui->btnDraw20);
@@ -25,6 +21,7 @@ DrawMoney::DrawMoney(QString id_kortti, QString id_tili, QByteArray token, QWidg
     connect(ptr,SIGNAL(released()), this,
             SLOT(buttonClicked()));}
 
+
 }
 
 DrawMoney::~DrawMoney()
@@ -32,37 +29,14 @@ DrawMoney::~DrawMoney()
     delete ui;
 }
 
+
+
 void DrawMoney::on_btnDrawX_clicked()
 {
-    DrawAnotherSum dialog(this);
+
+    emit btnDrawX_signal();
 
 
-    if (dialog.exec() == QDialog::Rejected) {
-        return;
-    }
-
-    sum=dialog.sum().toFloat();
-    sum*=-1;
-
-    qDebug() <<sum;
-    qDebug() <<kortti_id;
-    qDebug() <<tili_id;
-    qDebug() <<sum;
-    QJsonObject jsonObj;
-    jsonObj.insert("id_kortti",kortti_id);
-    jsonObj.insert("id_tili",tili_id);
-    jsonObj.insert("summa",sum);
-
-    QNetworkRequest request((base_url+"/tilitapahtumat/debit"));
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
-    request.setRawHeader(QByteArray("Authorization"),(webtoken));
-
-
-    debitManager = new QNetworkAccessManager(this);
-    connect(debitManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(debitSlot(QNetworkReply*)));
-
-    reply = debitManager->post(request, QJsonDocument(jsonObj).toJson());
 
 }
 
@@ -73,46 +47,30 @@ void DrawMoney::buttonClicked()
     sum = button->text().toFloat();
     sum*=-1;
 
-    qDebug() <<sum;
-    qDebug() <<kortti_id;
-    qDebug() <<tili_id;
-    qDebug() <<sum;
-    QJsonObject jsonObj;
-    jsonObj.insert("id_kortti",kortti_id);
-    jsonObj.insert("id_tili",tili_id);
-    jsonObj.insert("summa",sum);
-
-    QNetworkRequest request((base_url+"/tilitapahtumat/debit"));
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
-    request.setRawHeader(QByteArray("Authorization"),(webtoken));
-
-
-    debitManager = new QNetworkAccessManager(this);
-    connect(debitManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(debitSlot(QNetworkReply*)));
-
-    reply = debitManager->post(request, QJsonDocument(jsonObj).toJson());
+    emit moneyBtnPressed_signal();
+    emit button_signal(sum);
 }
 
-
-void DrawMoney::debitSlot(QNetworkReply *reply)
+void DrawMoney::drawSuccess_slot()
 {
-    response_data=reply->readAll();
-    qDebug() <<response_data;
+    ui->labelStatus->setText("Ota rahat, ole hyvä");
+}
 
-    if(response_data == "1"){
-        qDebug() <<"OK";
-        ui->labelStatus->setText("Ota rahat, ole hyvä");
-    }
-    else {
-        qDebug() <<"ERROR";
-        ui->labelStatus->setText("Nosto epäonnistui");
-    }
+void DrawMoney::drawFailure_slot()
+{
+    ui->labelStatus->setText("Nosto epäonnistui");
+}
+
+void DrawMoney::timeoutDrawMoney_slot()
+{
+    this->close();
 
 }
+
 
 void DrawMoney::on_btnDrawClose_clicked()
 {
+    emit moneyBtnClose_signal();
     emit updateSignal();
     this->close();
 }

@@ -15,26 +15,23 @@ Login::~Login()
 {
     delete ui;
     ui=nullptr;
-    delete objectPin;
-    objectPin=nullptr;
 }
+
+
 
 void Login::on_btnLoginLogin_clicked()
 {
     rfid=ui->lineEditRFID->text();
-    objectPin = new Pin(rfid);
-    objectPin->show();
 
-    connect(this,SIGNAL(timeReset_signal(states,events)),
-                pBankTimer,SLOT(runStateMachine(states,events)));
-    emit timeReset_signal(tier1,timeReset);
-    disconnect(this,SIGNAL(timeReset_signal(states,events)),
-                pBankTimer,SLOT(runStateMachine(states,events)));
+    emit korttinumero_signal(rfid);
+    emit loggingIn_signal();
+    emit login_signal();
+
+  //  connect(this,SIGNAL(timeReset_signal(states,events)),
+    //            pBankTimer,SLOT(runStateMachine(states,events)));
+   // emit timeReset_signal(tier1,timeReset);
+   // disconnect(this,SIGNAL(timeReset_signal(states,events)),
+    //            pBankTimer,SLOT(runStateMachine(states,events)));
 
     this->close();
-
-
-
 }
-
-

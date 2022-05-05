@@ -22,24 +22,24 @@ public:
     explicit BankActions(QString id_tili,QByteArray token,QWidget *parent = nullptr);
     ~BankActions();
 
+signals:
+    void btnActions_signal();
+    void btnPrev_signal();
+    void closeActions_signal();
+
+public slots:
+    void actionsTapahtumat_slot(QString);
+    void timeoutBankActions_slot();
+
 private slots:
     void on_btnActionsNext_clicked();
     void on_btnActionsPrevious_clicked();
     void on_btnActionsClose_clicked();
 
-    void actionsSlot(QNetworkReply *reply);
 
 private:
     Ui::BankActions *ui;
-    MyUrl *objectMyUrl;
-    QString base_url;
-    QNetworkAccessManager *actionsManager;
-    QNetworkReply *reply;
-    QByteArray response_data;
-    QString korttinumero;
-    QByteArray webtoken;
-    QString tili_id;
-    int ttSivu = 1;
+
 };
 
 #endif // BANKACTIONS_H

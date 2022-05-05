@@ -23,23 +23,24 @@ public:
 
 signals:
     void updateSignal();
+    void btnDrawX_signal();
+    void button_signal(float);
+    void moneyBtnPressed_signal();
+    void moneyBtnClose_signal();
+
+public slots:
+    void drawSuccess_slot();
+    void drawFailure_slot();
+    void timeoutDrawMoney_slot();
 
 private slots:
-    void debitSlot(QNetworkReply *reply);
+
     void buttonClicked();
     void on_btnDrawClose_clicked();
     void on_btnDrawX_clicked();
 
 private:
     Ui::DrawMoney *ui;
-    QString kortti_id;
-    QString tili_id;
-    MyUrl *objectMyUrl;
-    QString base_url;
-    QNetworkAccessManager *debitManager;
-    QNetworkReply *reply;
-    QByteArray response_data;
-    QByteArray webtoken;
     QVector <QPushButton *> buttons;
     int sum;
 };
